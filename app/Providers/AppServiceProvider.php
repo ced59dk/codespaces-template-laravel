@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Trust the proxy headers for GitHub Codespaces
+        // This prevents Laravel from adding port 8000 to redirects
+        \Illuminate\Support\Facades\URL::forceScheme('https');
+        \Illuminate\Support\Facades\URL::forceRootUrl(config('app.url'));
     }
 }

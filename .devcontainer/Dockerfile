@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/devcontainers/php:8.2
 
 # Install system dependencies and PHP extensions
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
     git \
     unzip \
     libpng-dev \
@@ -15,10 +15,12 @@ RUN apt-get update && \
     libreadline-dev \
     libxslt1-dev \
     libpq-dev \
+    libicu-dev \
     curl \
     zip \
     default-mysql-client && \
-    docker-php-ext-install pdo_mysql mbstring xml zip bcmath
+    docker-php-ext-install pdo_mysql mbstring xml zip bcmath intl && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install latest Node.js (LTS version) and npm
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
